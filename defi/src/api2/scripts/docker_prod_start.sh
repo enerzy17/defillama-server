@@ -30,6 +30,8 @@ git pull -q
 
 llama_runner init-defi
 
+ls -la $CACHE_DIR
+
 if [ -n "$NGINX_ENABLED" ]; then
     # Sync cache from storage box to local cache dir
     sshpass -p "$API_STORAGEBOX_PASSWORD" rsync --recursive -avz --stats \
@@ -52,6 +54,8 @@ else
     llama_runner cron-app-metadata
     llama_runner cron-cex
 fi
+
+ls -la $CACHE_DIR
 
 # start API2 server
 timeout 6m npx pm2 startOrReload src/api2/ecosystem.config.js
