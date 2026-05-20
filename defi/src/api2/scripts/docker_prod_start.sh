@@ -22,8 +22,6 @@ if [ -n "$CUSTOM_GIT_BRANCH_DEPLOYMENT" ]; then
     git checkout "$CUSTOM_GIT_BRANCH_DEPLOYMENT"  --quiet
     # Pull latest code from the branch
     git pull origin "$CUSTOM_GIT_BRANCH_DEPLOYMENT"  --quiet
-    # log latest commit
-    echo $(git rev-parse HEAD)
 # else
     # echo "Using default branch deployment: $(git branch --show-current)"
 fi
@@ -44,6 +42,8 @@ if [ -n "$NGINX_ENABLED" ]; then
 
     # set nodejs port to 5000 and use nginx
     export PORT=5000
+
+    echo $API2_CACHE_DIR
 else
 
     # this will work if there is already a cache, and cut down the startup time while we update the cache
@@ -55,6 +55,8 @@ else
     llama_runner cron-app-metadata
     llama_runner cron-cex
 fi
+
+ls $CACHE_DIR
 
 # start API2 server
 timeout 6m npx pm2 startOrReload src/api2/ecosystem.config.js
