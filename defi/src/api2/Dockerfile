@@ -5,8 +5,6 @@ RUN npm install -g pnpm
 RUN apt-get update && apt-get install -y nginx rsync sshpass && rm -rf /var/lib/apt/lists/*
 ARG CUSTOM_GIT_BRANCH_DEPLOYMENT
 ENV CUSTOM_GIT_BRANCH_DEPLOYMENT=${CUSTOM_GIT_BRANCH_DEPLOYMENT}
-ENV PORT=5000
-ENV NGINX_ENABLED=true
 
 # Set the working directory in the container to /app
 WORKDIR /app

@@ -40,7 +40,7 @@ if [ -n "$NGINX_ENABLED" ]; then
     # point Node at the same cache dir nginx serves from
     export API2_CACHE_DIR="$CACHE_DIR"
 
-    # set nodejs port to 5000 and use nginx
+    # we will run nginx at port 5001, need to set nodejs port to 5000
     export PORT=5000
 else
 
