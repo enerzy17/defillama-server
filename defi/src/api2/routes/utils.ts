@@ -3,7 +3,7 @@ import * as sdk from '@defillama/sdk'
 import { readRouteData } from "../cache/file-cache";
 
 const ACCEL_PREFIX = '/_internal/cache'
-const behindNginx = !!process.env.API_STORAGE_HOST
+const NGINX_ENABLED = process.env.NGINX_ENABLED && process.env.NGINX_ENABLED === 'true'
 
 function getTimeInFutureMinutes(minutes: number) {
   const date = new Date();
@@ -46,7 +46,7 @@ export function errorWrapper(routeFn: any) {
 
 
 export async function fileResponse(filePath: string, res: HyperExpress.Response) {
-  if (behindNginx) {
+  if (NGINX_ENABLED) {
     res.setHeader('X-Accel-Redirect', ACCEL_PREFIX + '/' + filePath)
     return res.status(200).send('')
   }
