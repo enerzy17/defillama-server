@@ -63,12 +63,13 @@ if [ -n "$NGINX_ENABLED" ]; then
     NGINX_CONF_SRC="$SCRIPT_DIR/../deploy/nginx.conf"
     NGINX_CONF_DST="/etc/nginx/sites-available/api2.conf"
 
+    nginx -t #debug
+
     cp "$NGINX_CONF_SRC" "$NGINX_CONF_DST"
     ln -sf "$NGINX_CONF_DST" /etc/nginx/sites-enabled/api2.conf
 
     if nginx -t 2>/dev/null; then
         if [ -s /run/nginx.pid ] && kill -0 "$(cat /run/nginx.pid)" 2>/dev/null; then
-            nginx -t
             nginx -s reload
             echo "nginx config updated and reloaded"
         else
