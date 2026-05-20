@@ -30,17 +30,11 @@ git pull -q
 
 llama_runner init-defi
 
-ls -la $CACHE_DIR
-
 if [ -n "$NGINX_ENABLED" ]; then
-    echo "====================================1"
     # Sync cache from storage box to local cache dir
-    sshpass -p "$API_STORAGEBOX_PASSWORD" rsync --recursive -avz --stats \
+    sshpass -p "$API_STORAGEBOX_PASSWORD" rsync --recursive -az --stats \
         -e "ssh -p23 -o StrictHostKeyChecking=no" \
         "$API_STORAGE_HOST:$REMOTE_DIR" "$CACHE_DIR" 2>&1
-        rc=$?
-        echo "rsync exit=$rc"
-    echo "====================================2"
 
     # point Node at the same cache dir nginx serves from
     export API2_CACHE_DIR="$CACHE_DIR"
@@ -58,8 +52,6 @@ else
     llama_runner cron-app-metadata
     llama_runner cron-cex
 fi
-
-ls -la $CACHE_DIR
 
 # start API2 server
 timeout 6m npx pm2 startOrReload src/api2/ecosystem.config.js
