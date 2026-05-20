@@ -42,8 +42,6 @@ if [ -n "$NGINX_ENABLED" ]; then
 
     # set nodejs port to 5000 and use nginx
     export PORT=5000
-
-    echo $API2_CACHE_DIR
 else
 
     # this will work if there is already a cache, and cut down the startup time while we update the cache
@@ -56,8 +54,6 @@ else
     llama_runner cron-cex
 fi
 
-ls $CACHE_DIR
-
 # start API2 server
 timeout 6m npx pm2 startOrReload src/api2/ecosystem.config.js
 exit_status=$?
@@ -69,8 +65,6 @@ if [ -n "$NGINX_ENABLED" ]; then
 
     cp "$NGINX_CONF_SRC" "$NGINX_CONF_DST"
     ln -sf "$NGINX_CONF_DST" /etc/nginx/sites-enabled/api2.conf
-
-    cat /etc/nginx/sites-enabled/api2.conf
 
     if nginx -t 2>/dev/null; then
         if [ -s /run/nginx.pid ] && kill -0 "$(cat /run/nginx.pid)" 2>/dev/null; then
