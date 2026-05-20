@@ -36,6 +36,11 @@ if [ -n "$NGINX_ENABLED" ]; then
         -e "ssh -p23 -o StrictHostKeyChecking=no" \
         "$API_STORAGE_HOST:$REMOTE_DIR" "$CACHE_DIR"
 
+    # debug
+    sshpass -p "$API_STORAGEBOX_PASSWORD" \
+        ssh -p23 -o StrictHostKeyChecking=no "$API_STORAGE_HOST" \
+        "ls -la '$REMOTE_DIR' && find '$REMOTE_DIR' -type f | wc -l"
+
     # point Node at the same cache dir nginx serves from
     export API2_CACHE_DIR="$CACHE_DIR"
 
