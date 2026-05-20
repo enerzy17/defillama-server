@@ -1,7 +1,6 @@
 import * as HyperExpress from "hyper-express";
 import * as sdk from '@defillama/sdk'
-import { readRouteData } from "../cache/file-cache";
-import { fileNameNormalizer } from "../cache/file-cache";
+import { readRouteData, fileNameNormalizer } from "../cache/file-cache";
 
 const ACCEL_PREFIX = '/_internal/cache'
 const NGINX_ENABLED = process.env.NGINX_ENABLED && process.env.NGINX_ENABLED === 'true'
