@@ -22,6 +22,8 @@ if [ -n "$CUSTOM_GIT_BRANCH_DEPLOYMENT" ]; then
     git checkout "$CUSTOM_GIT_BRANCH_DEPLOYMENT"  --quiet
     # Pull latest code from the branch
     git pull origin "$CUSTOM_GIT_BRANCH_DEPLOYMENT"  --quiet
+    # log latest commit
+    echo $(git rev-parse HEAD)
 # else
     # echo "Using default branch deployment: $(git branch --show-current)"
 fi
@@ -30,16 +32,12 @@ git pull -q
 
 llama_runner init-defi
 
-echo $NGINX_ENABLED
-
 if [ -n "$NGINX_ENABLED" ]; then
 
     # Sync cache from storage box to local cache dir
     sshpass -p "$API_STORAGEBOX_PASSWORD" rsync --recursive -az \
         -e "ssh -p23 -o StrictHostKeyChecking=no" \
         "$API_STORAGE_HOST:$REMOTE_DIR" "$CACHE_DIR"
-
-    ls -la $CACHE_DIR
 
     # point Node at the same cache dir nginx serves from
     export API2_CACHE_DIR="$CACHE_DIR"
@@ -81,8 +79,8 @@ if [ -n "$NGINX_ENABLED" ]; then
             echo "nginx started"
         fi
     else
-        echo "ERROR: nginx config test failed, not reloading"
         nginx -t
+        echo "ERROR: nginx config test failed, not reloading"
     fi
 fi
 
