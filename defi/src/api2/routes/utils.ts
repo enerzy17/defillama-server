@@ -1,6 +1,7 @@
 import * as HyperExpress from "hyper-express";
 import * as sdk from '@defillama/sdk'
 import { readRouteData } from "../cache/file-cache";
+import { fileNameNormalizer } from "../cache/file-cache";
 
 const ACCEL_PREFIX = '/_internal/cache'
 const NGINX_ENABLED = process.env.NGINX_ENABLED && process.env.NGINX_ENABLED === 'true'
@@ -47,8 +48,9 @@ export function errorWrapper(routeFn: any) {
 
 export async function fileResponse(filePath: string, res: HyperExpress.Response) {
   if (NGINX_ENABLED) {
-    res.setHeader('X-Accel-Redirect', ACCEL_PREFIX + '/' + filePath)
-    return res.status(200).send('')
+    const normalized = fileNameNormalizer(filePath);
+    res.setHeader('X-Accel-Redirect', `${ACCEL_PREFIX}/${normalized}`);
+    return res.status(200).send('');
   }
 
   try {
