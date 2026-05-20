@@ -42,9 +42,6 @@ if [ -n "$NGINX_ENABLED" ]; then
 
     # set nodejs port to 5000 and use nginx
     export PORT=5000
-
-    # debug
-    ls -la "$CACHE_DIR/build"
 else
 
     # this will work if there is already a cache, and cut down the startup time while we update the cache
