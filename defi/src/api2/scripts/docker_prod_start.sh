@@ -58,8 +58,8 @@ fi
 timeout 6m npx pm2 startOrReload src/api2/ecosystem.config.js
 exit_status=$?
 
-# nginx: install config and start/reload if API_STORAGE_HOST is set
-if [ -n "$API_STORAGE_HOST" ]; then
+# nginx: install config and start/reload if NGINX_ENABLED is set to true
+if [ -n "$NGINX_ENABLED" ]; then
     NGINX_CONF_SRC="$SCRIPT_DIR/../deploy/nginx.conf"
     NGINX_CONF_DST="/etc/nginx/sites-available/api2.conf"
 
@@ -68,6 +68,7 @@ if [ -n "$API_STORAGE_HOST" ]; then
 
     if nginx -t 2>/dev/null; then
         if [ -s /run/nginx.pid ] && kill -0 "$(cat /run/nginx.pid)" 2>/dev/null; then
+            nginx -t
             nginx -s reload
             echo "nginx config updated and reloaded"
         else
