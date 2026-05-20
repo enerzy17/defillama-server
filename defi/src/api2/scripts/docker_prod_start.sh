@@ -33,10 +33,12 @@ llama_runner init-defi
 ls -la $CACHE_DIR
 
 if [ -n "$NGINX_ENABLED" ]; then
+    echo "====================================1"
     # Sync cache from storage box to local cache dir
     sshpass -p "$API_STORAGEBOX_PASSWORD" rsync --recursive -avz --stats \
         -e "ssh -p23 -o StrictHostKeyChecking=no" \
         "$API_STORAGE_HOST:$REMOTE_DIR" "$CACHE_DIR"
+    echo "====================================2"
 
     # point Node at the same cache dir nginx serves from
     export API2_CACHE_DIR="$CACHE_DIR"
