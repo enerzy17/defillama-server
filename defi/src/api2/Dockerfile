@@ -1,7 +1,7 @@
 # Use an official Node.js runtime as a parent image
-FROM node:23
+FROM node:20
 # Install pnpm and nginx
-RUN npm install -g pnpm pm2 ts-node typescript
+RUN npm install -g pnpm
 RUN apt-get update && apt-get install -y nginx rsync sshpass && rm -rf /var/lib/apt/lists/*
 ARG CUSTOM_GIT_BRANCH_DEPLOYMENT
 ENV CUSTOM_GIT_BRANCH_DEPLOYMENT=${CUSTOM_GIT_BRANCH_DEPLOYMENT}
