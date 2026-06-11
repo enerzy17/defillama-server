@@ -3477,9 +3477,9 @@ const data6: Protocol[] = [
     name: "Kerne",
     address: null,
     symbol: "-",
-    url: " ", // pending to add url https://kerne.fi
+    url: "https://kerne.fi",
     description:
-      "Kerne is a delta-neutral yield protocol on Base. The vault (ERC-4626) holds WETH collateral and runs a delta-neutral basis trade: stETH on the long leg, Hyperliquid perp short on the short leg.",
+      "Kerne is a delta-neutral synthetic dollar protocol on Base. USDC mints kUSD 1:1 through the on-chain Peg Stability Module, collateral is hedged with short perpetual positions on Hyperliquid, and staked kUSD (skUSD) accrues the delta-neutral yield.",
     chain: "Base",
     logo: `${baseIconsUrl}/kerne.jpg`,
     audits: "0",
